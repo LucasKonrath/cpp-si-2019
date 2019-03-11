@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1552344658 source:c:\users\lucaskd\cprojects\cpp-si-2019\exercicios-operadores\main.c
+	<stdio.h>
+	<stdlib.h>
+
