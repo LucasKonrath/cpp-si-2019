@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1552520145 source:c:\users\lucaskd\cprojects\cpp-si-2019\exscondicionais\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+
