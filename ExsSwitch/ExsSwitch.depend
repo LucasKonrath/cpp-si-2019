@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1552522303 source:c:\users\lucaskd\cprojects\cpp-si-2019\exsswitch\main.c
+	<stdio.h>
+	<stdlib.h>
+
