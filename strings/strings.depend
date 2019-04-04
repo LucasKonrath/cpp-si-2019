@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1554338850 source:c:\users\lucaskd\cprojects\cpp-si-2019\strings\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+

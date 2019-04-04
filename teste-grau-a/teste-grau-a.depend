@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1554161210 source:c:\users\lucaskd\cprojects\cpp-si-2019\teste-grau-a\main.c
+	<stdio.h>
+	<stdlib.h>
+	<locale.h>
+

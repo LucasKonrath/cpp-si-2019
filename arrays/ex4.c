@@ -3,7 +3,7 @@
 
 int main()
 {
-    float B[10];
+    int numeros[];
 
     for(int i = 0; i < 10; i++){
 
