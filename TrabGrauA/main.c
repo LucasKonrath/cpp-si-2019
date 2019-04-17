@@ -12,6 +12,12 @@ int assentoLivre(char assento[3], int lugares[6][29]);
 int obterIndiceFileira(char codigoFileira);
 float calcularPrecoAssento(char assento[3], int idade, float precoBase);
 void confirmarReserva(char assento[3], int idade, int lugares[6][29]);
+void liberarReserva(int lugares[6][29]);
+void retirarReserva(char assento[3], int lugares[6][29]);
+void consultarAssento(int lugares[6][29], float precoBase);
+const char* obterCategoriaAssento(char assento[3]);
+int obterIdadeReservada(char assento[3], int lugares[6][29]);
+void consultarDisponibilidadeAssentosConsecutivos(int lugares[6][29]);
 
 int main()
 {
@@ -46,10 +52,10 @@ int main()
             reservarAssento(lugares, precoBase);
             break;
         case 3:
-            printf("Opcao escolhida: 3 ");
+            liberarReserva(lugares);
             break;
         case 4:
-            printf("Opcao escolhida: 4 ");
+            consultarAssento(lugares, precoBase);
             break;
         case 5:
             printf("O programa foi fechado\n");
@@ -201,12 +207,17 @@ void reservarAssento(int lugares[6][29], float precoBase)
 
     scanf(" %c", &resposta);
 
-    if('S' == resposta){
+    if('S' == resposta)
+    {
         confirmarReserva(assento, idade, lugares);
-    }else if('N' == resposta){
+    }
+    else if('N' == resposta)
+    {
         printf("\n Abandonando operação.");
         return;
-    }else{
+    }
+    else
+    {
         printf("\n Operação inválida.");
         return;
     }
@@ -310,7 +321,8 @@ float calcularPrecoAssento(char assento[3], int idade, float precoBase)
     return precoBase * multiplicador * multiplicadorIdade;
 }
 
-void confirmarReserva(char assento[3], int idade, int lugares[6][29]){
+void confirmarReserva(char assento[3], int idade, int lugares[6][29])
+{
     char fileira = assento[0];
     int indiceColuna = ((assento[1] - '0') * 10 + (assento[2] - '0')) - 1;
 
@@ -319,3 +331,131 @@ void confirmarReserva(char assento[3], int idade, int lugares[6][29]){
     lugares[indiceFileira][indiceColuna] =  idade;
 
 }
+
+void liberarReserva(int lugares[6][29])
+{
+
+    char assento[3];
+
+    printf("\nDigite o assento desejado");
+    scanf("%s", assento);
+    printf("assento escolhido %s", assento);
+
+    if(assentoLivre(assento, lugares) == 0)
+    {
+        printf("\n Assento informado não está livre.");
+        printf("\n Deseja cancelar sua reserva? S para sim, N para não.");
+        char resposta;
+
+        scanf(" %c", &resposta);
+
+        if('S' == resposta)
+        {
+            retirarReserva(assento, lugares);
+        }
+        else if('N' == resposta)
+        {
+            printf("\n Abandonando operação.");
+            return;
+        }
+        else
+        {
+            printf("\n Operação inválida.");
+            return;
+        }
+    }
+    else
+    {
+        printf("\n Assento informado já está livre.");
+        return;
+    }
+}
+
+void retirarReserva(char assento[3], int lugares[6][29])
+{
+
+    char fileira = assento[0];
+
+    int indiceColuna = ((assento[1] - '0') * 10 + (assento[2] - '0')) - 1;
+
+    int indiceFileira = obterIndiceFileira(fileira);
+
+    lugares[indiceFileira][indiceColuna] =  0;
+}
+
+void consultarAssento(int lugares[6][29], float precoBase)
+{
+
+    char assento[3];
+
+    printf("\nDigite o assento desejado");
+    scanf("%s", assento);
+    printf("assento escolhido %s", assento);
+
+    int livre = assentoLivre(assento, lugares);
+
+    if(livre == 0)
+    {
+        printf("\n Assento informado não está livre.");
+    }
+    else
+    {
+        printf("\n Assento está livre!");
+    }
+
+    printf("\nCategoria: %s", obterCategoriaAssento(assento));
+
+    if(livre == 0)
+    {
+        printf("\n Idade de quem reservou: %d", obterIdadeReservada(assento, lugares));
+    }
+
+    printf("\n Preço base: %f", calcularPrecoAssento(assento, 20, precoBase));
+    if(livre == 1)
+    {
+        printf("\n Preço para menores de 2 anos: %f", calcularPrecoAssento(assento, 1, precoBase));
+        printf("\n Preço para menores de 12 anos: %f", calcularPrecoAssento(assento, 11, precoBase));
+    }
+}
+
+const char* obterCategoriaAssento(char assento[3])
+{
+
+    char fileira = assento[0];
+
+    int indiceColuna = ((assento[1] - '0') * 10 + (assento[2] - '0')) - 1;
+
+    int indiceFileira = obterIndiceFileira(fileira);
+
+    if(indiceColuna < 6)
+    {
+        return "EXECUTIVA";
+    }
+    else if(indiceColuna > 6 && indiceColuna < 10 || indiceColuna > 12 && indiceColuna < 27)
+    {
+        return "ECONOMICA";
+    }
+    else if(indiceColuna == 12 || indiceColuna == 11)
+    {
+        return "SAÍDA DE EMERGÊNCIA";
+    }
+    else if(indiceColuna == 10 || indiceColuna == 28)
+    {
+        return "SEM RECLINAGEM";
+    }
+
+    return;
+}
+
+int obterIdadeReservada(char assento[3], int lugares[6][29])
+{
+
+    char fileira = assento[0];
+
+    int indiceColuna = ((assento[1] - '0') * 10 + (assento[2] - '0')) - 1;
+
+    int indiceFileira = obterIndiceFileira(fileira);
+
+    return lugares[indiceFileira][indiceColuna];
+}
+
