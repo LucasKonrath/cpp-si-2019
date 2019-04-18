@@ -475,7 +475,6 @@ void consultarDisponibilidadeAssentosConsecutivos(int lugares[6][29])
 
 void buscarConsecutivosEconomica(int numeroAssentos, int lugares[6][29])
 {
-
     int numeroFileira = 999;
     int numeroColuna = 999;
     int numeroLivresSequencia;
@@ -506,12 +505,7 @@ void buscarConsecutivosEconomica(int numeroAssentos, int lugares[6][29])
                 printf("\n Primeira sequencia EXECUTIVA encontrada: %c %d", escolherLetraAssento(numeroFileira), numeroColuna);
                 return;
             }
-
-            if(numeroFileira == 999 || numeroColuna == 999)
-            {
                 printf("\n Nenhuma sequencia EXECUTIVA encontrada.");
-            }
         }
     }
 }
-
