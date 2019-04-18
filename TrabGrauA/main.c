@@ -18,6 +18,10 @@ void consultarAssento(int lugares[6][29], float precoBase);
 const char* obterCategoriaAssento(char assento[3]);
 int obterIdadeReservada(char assento[3], int lugares[6][29]);
 void consultarDisponibilidadeAssentosConsecutivos(int lugares[6][29]);
+void buscarConsecutivosExecutiva(int numeroAssentos, int lugares[6][29]);
+void buscarConsecutivosEconomica(int numeroAssentos, int lugares[6][29]);
+void buscarConsecutivosSaidaEmergencia(int numeroAssentos, int lugares[6][29]);
+void buscarConsecutivosSemReclinagem(int numeroAssentos, int lugares[6][29]);
 
 int main()
 {
@@ -58,8 +62,8 @@ int main()
             consultarAssento(lugares, precoBase);
             break;
         case 5:
-            printf("O programa foi fechado\n");
-            return 0;
+            consultarDisponibilidadeAssentosConsecutivos(lugares);
+            break;
         default:
             printf("Opcao invalida");
         }
@@ -457,5 +461,57 @@ int obterIdadeReservada(char assento[3], int lugares[6][29])
     int indiceFileira = obterIndiceFileira(fileira);
 
     return lugares[indiceFileira][indiceColuna];
+}
+
+void consultarDisponibilidadeAssentosConsecutivos(int lugares[6][29])
+{
+    int numeroAssentos;
+    printf("\n Digite o número de assentos consecutivos que deseja encontrar");
+    scanf("%d", &numeroAssentos);
+
+    buscarConsecutivosEconomica(numeroAssentos, lugares);
+
+}
+
+void buscarConsecutivosEconomica(int numeroAssentos, int lugares[6][29])
+{
+
+    int numeroFileira = 999;
+    int numeroColuna = 999;
+    int numeroLivresSequencia;
+
+    for(int i = 0; i < 6; i++)
+    {
+        numeroLivresSequencia = 0;
+        for(int j = 0; j < 6; j++)
+        {
+            if(lugares[i][j] == 0)
+            {
+                if(numeroLivresSequencia == 0)
+                {
+                    numeroFileira = i;
+                    numeroColuna = j;
+                }
+                numeroLivresSequencia++;
+            }
+            else
+            {
+                numeroFileira = 999;
+                numeroColuna = 999;
+                numeroLivresSequencia = 0;
+            }
+
+            if(numeroLivresSequencia == numeroAssentos)
+            {
+                printf("\n Primeira sequencia EXECUTIVA encontrada: %c %d", escolherLetraAssento(numeroFileira), numeroColuna);
+                return;
+            }
+
+            if(numeroFileira == 999 || numeroColuna == 999)
+            {
+                printf("\n Nenhuma sequencia EXECUTIVA encontrada.");
+            }
+        }
+    }
 }
 
